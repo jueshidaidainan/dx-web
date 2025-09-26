@@ -1,24 +1,25 @@
+// src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router'
-// 导入您刚刚创建的视图组件
 import SwitchPlanDashboardView from '../views/SwitchPlanDashboardView.vue'
+import ClusterInfoView from '../views/ClusterInfoView.vue' // 导入新视图
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    // ... 您可能还有其他路由，比如 HomeView
-    // {
-    //   path: '/',
-    //   name: 'home',
-    //   component: HomeView
-    // },
     {
-      // 定义这个页面的访问路径，例如 /dashboard
       path: '/dashboard',
       name: 'dashboard',
-      // 将路径和您的视图组件关联起来
       component: SwitchPlanDashboardView
-    }
+    },
+    {
+      // 添加新路由,网页地址栏访问这个
+      path: '/cluster-info',
+      name: 'cluster-info',
+      component: ClusterInfoView
+    },
+    // 其他路由...
   ]
 })
+
 
 export default router

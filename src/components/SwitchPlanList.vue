@@ -1,5 +1,6 @@
 <template>
-  <a-table :columns="columns" :data-source="plans" :row-key="record => record.planCode" :loading="loading">
+  <a-table :columns="columns" :data-source="plans" :row-key="record => record.planCode" :loading="loading" :pagination="pagination" @change="handleChange">
+
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'prepareSwitchTime'">
         {{ dayjs(record.prepareSwitchTime).format('YYYY-MM-DD HH:mm:ss') }}
@@ -48,21 +49,21 @@ import { CheckCircleOutlined, SyncOutlined, CloseCircleOutlined, InfoCircleOutli
 
 // 定义接收的 props
 defineProps({
-  plans: {
-    type: Array,
-    required: true,
-  },
-  loading: {
-    type: Boolean,
-    default: false,
-  },
+  plans: { type: Array, required: true },
+  loading: { type: Boolean, default: false },
+  pagination: { type: Object, required: true }, // <--【新增】
 });
 
 // 定义要触发的事件
-const emit = defineEmits(['show-details']);
+const emit = defineEmits(['show-details', 'change']); // <--【新增 'change'】
 
 const showDetails = (plan) => {
   emit('show-details', plan);
+};
+
+// 【新增】
+const handleChange = (pager, filters, sorter) => {
+  emit('change', pager, filters, sorter);
 };
 
 // 定义表格的列
